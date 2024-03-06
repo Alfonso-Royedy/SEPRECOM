@@ -1,0 +1,1 @@
+<script type="text/javascript" language="javascript" src="<?php echo base_url();?>application/views/third_party/jquery/jquery-1.12.0.min.js"></script>

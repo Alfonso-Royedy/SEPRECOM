@@ -1,0 +1,80 @@
+	.main_div_container{
+		background-color: white; 
+		border-left: 3px solid #353F5B; 
+		margin-top: 90px; 
+		margin-bottom: 90px; 
+		width: 90%;	
+	}
+
+	.img-login{
+        width: 90px;
+        box-shadow: 0 0 10px 3px rgba(0,0,0,0.2);
+        border-radius: 100%;
+    }
+	
+	.login_div_container{
+		background-color: white; 
+		border-left: 3px solid #353F5B; 
+		margin-top: 30px; 				
+		margin-bottom: 90px; 
+		width: 90%;
+	}
+	
+	.main_breadcrumb{
+		background-color: #000053;
+	}
+
+	.color_amarillo{
+		color: #eeff00;
+		text-decoration: none;
+	}
+
+	.btn-color{
+		background-color: #FFCD00; 
+		color:#ffffff;
+		transition: all 0.3s ease-in-out;
+	}
+
+	.btn-close{
+		background-color: #ea0000; 
+		color:#ffffff;
+		transition: all 0.3s ease-in-out;
+	}
+
+	.btn-color:hover{
+		background-color: #fad43d;
+		transition: all 0.3s ease-in-out;
+
+	  }
+
+	  .btn-close:hover{
+		background-color: #ec5959;
+		transition: all 0.3s ease-in-out;
+
+	  }
+	
+	.font_notif_error{
+		color: #B84464;
+	}
+	
+	.dt_search_input {
+		width: 100%; 
+		color: black; 
+		margin-bottom: 5px;
+	}
+	
+	.dataTables_paginate {
+		margin-bottom: 5px;
+		margin-top: 5px;
+	}
+	
+	table.dataTable thead th,
+	table.dataTable thead td {
+		background-color: #FBFBEF !important;
+	}
+	
+	table.dataTable tfoot th,
+	table.dataTable tfoot td {
+		padding: 4px 6px !important;  
+		background-color: lightgray !important;		
+	}
