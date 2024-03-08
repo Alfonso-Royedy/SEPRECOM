@@ -58,22 +58,99 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>				
 		</div>
 
+		<button style="margin-bottom: 15px;" type="button" id="CrearNuevo" class="btn btn-primary">Nuevo</button>
+			<script>
+					$(document).ready(function(){
+						$("#CrearNuevo").click(function(){
+							frmNuevoUsuario.reset(); 
+							//se muestra la ventana modal del formulario
+							$('#modalNuevoUsuario').modal();
+							//se blanquea el div de errores del formulario
+							$("#div_col_val_errors").html("");
+						});
+					});
+			</script>
+
+<button style="margin-bottom: 15px;" type="button" id="EliminarElemento" class="btn btn-primary">Eliminar</button>
+							<script>
+								$(document).ready(function () {
+									$("#EliminarElemento").click(function(){
+										//se obtienen los datos del registro seleccionado de la tabla
+										var count = $('#tbCliente').DataTable().rows({ selected: true }).count();
+										if (count==1){
+											var rows =  $('#tbCliente').DataTable().rows({ selected: true }).indexes();
+											var data =  $('#tbCliente').DataTable().rows( rows ).data();												
+											var respuesta = confirm('¿Está seguro que desea eliminar el usuario:\n\n'+data[0].nombre+'?');
+											if (respuesta){										
+												$.ajax({
+													type: "POST",
+													url: "<?php echo base_url();?>index.php/Usuarios/Eliminar_Usuario",
+													data: {"matricula" : data[0].matricula},
+													success: function(msg){															
+														var msg_substr = msg.split("@", 3);
+														var msg_html = msg_substr[0];
+														var msg_cont_notif = msg_substr[1];
+														var msg_result = msg_substr[2];
+														$('#div_notifications_content').html(msg_html);	
+														$("#span_notif_count").html(msg_cont_notif);         
+														$('#modal_notificaciones').modal();
+														if (msg_result=="T"){																																	
+															$('#tbCliente').DataTable().ajax.reload(null, false);
+														}																								
+													},
+													error: function(){
+														alert("Ocurrió error al procesar la petición al servidor.");
+													}
+												});
+											}	
+										}else{
+											alert('Debe elegir un registro');
+										}
+									});
+								});
+							</script>
+
+
+		<button style="margin-bottom: 15px;" type="button" id="VerElemento" class="btn btn-primary">Ver Información</button>
+			<script>
+				$(document).ready(function () {
+					$("#VerElemento").click(function(){
+						//se obtienen los datos del registro seleccionado de la tabla
+						var count = $('#tbCliente').DataTable().rows({ selected: true }).count();
+						if (count==1){
+							var rows =  $('#tbCliente').DataTable().rows({ selected: true }).indexes();
+							var data =  $('#tbCliente').DataTable().rows( rows ).data();												
+							//se inicializan los valores del formulario												
+							$('#p_v_usuario').html(data[0].nombre);
+							$('#p_v_correo').html(data[0].correo);
+							$('#p_v_cargo').html(data[0].cargo);
+							$('#p_v_rol').html(data[0].Rol_admin);
+							//se muestra la ventana modal del formulario
+							$('#modalVerUsuario').modal();
+						}else{
+							alert('Debe elegir un registro');
+						}
+					});
+				});
+
+			</script>
+
 		<!-- Espacio disponible para mostrar informaci?n del portal -->	
 		<div class='row'>
 			<div class='col-md-12'>		
 		
 				<!-- Ventana modal del formulario para crear un nuevo registro -->	
-				<div class='modal fade' id='modalNuevaInstituc'>
+				<div class='modal fade' id='modalNuevoUsuario'>
 					<!--SI SE DESEA MODIFICAR EL ANCHO DE LA VENTANA style='width: 700px;'-->
 					<div class='modal-dialog'>
 						<div class='modal-content'>
-							<div class='modal-header'>
-								<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-									<h4 class='modal-title'>Nueva Institución</h4>
+							<div style="background-color: #000053;" class='modal-header'>
+								<!--<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>-->
+									<h4 style="color: white;" class='modal-title'>Nuevo usuario</h4>
 							</div>
 							<div class='modal-body'>
 <?php 
-							echo form_open("instituciones/crear_institucion","id='frmNuevaInstitucion' name='frmNuevaInstitucion' role='form'"); 
+							echo form_open("Usuarios/Crear_Usuario","id='frmNuevoUsuario' name='frmNuevoUsuario' role='form'"); 
 ?>												
 								<div class='row'>												
 									<div class='col-md-12' id='div_col_val_errors' name='div_col_val_errors'>										
@@ -81,20 +158,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 								<div class='row'>
 									<div class='col-md-4'>
-										Nombre de la Institución:
+										Nombre de usuario:
 									</div>
+									<br>
 									<div class='col-md-8'>
 										<div class='form-group'>											
 <?php 
-											EditBox("institucion","institucion","form-control","",1, 255,255,false,set_value('institucion'),"",false,"Nombre de la Institución","");												
+											EditBox("Usuario1","Usuario1","form-control","",1, 255,255,false,set_value('Usuario1'),"",false,"Ingrese usuario","");												
+?>
+										</div>
+									</div>
+								</div>
+
+								<div class='row'>
+									<div class='col-md-4'>
+										Correo:
+									</div>
+									<br>
+									<div class='col-md-8'>
+										<div class='form-group'>											
+<?php 
+											EditBox("Correo1","Correo1","form-control","",1, 255,255,false,set_value('Correo1'),"",false,"Ingrese correo","");												
+?>
+										</div>
+									</div>
+								</div>
+
+								<div class='row'>
+									<div class='col-md-4'>
+										Cargo:
+									</div>
+									<br>
+									<div class='col-md-8'>
+										<div class='form-group'>											
+<?php 
+											EditBox("Cargo1","Cargo1","form-control","",1, 255,255,false,set_value('Cargo1'),"",false,"Ingrese cargo","");												
+?>
+										</div>
+									</div>
+								</div>
+
+								<div class='row'>
+									<div class='col-md-4'>
+										Rol de administrador:
+									</div>
+									<br>
+									<div class='col-md-8'>
+										<div class='form-group'>											
+<?php 
+											EditBox("Rol_adm","Rol_adm","form-control","",1, 255,255,false,set_value('Rol_adm'),"",false,"Ingrese rol de administrador","");												
 ?>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class='modal-footer'>
-								<button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
-								<button type='button' class='btn btn-primary' id='btnGuardarNuevaInstitucion' name='btnGuardarNuevaInstitucion' value='Guardar'><span class='glyphicon glyphicon-floppy-disk'></span> Guardar</button>
+							<div style="background-color: #000053;" class='modal-footer'>
+								<button type='button' class='btn btn-close' data-dismiss='modal'>Cancelar</button>
+								<button type='button' class='btn btn-color' id='btnGuardarNuevoUsuario' name='btnGuardarNuevoUsuario' value='Guardar'><span class='glyphicon glyphicon-floppy-disk'></span> Guardar</button>
 							</div>
 							</form>
 						</div>
@@ -103,11 +223,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <script>															
 				$(document).ready(function () {
-					$("#btnGuardarNuevaInstitucion").click(function(){
+					$("#btnGuardarNuevoUsuario").click(function(){
 						$.ajax({
 							type: "POST",
-							url: "<?php echo base_url();?>index.php/instituciones/crear_institucion",
-							data: $('#frmNuevaInstitucion').serialize(),
+							url: "<?php echo base_url();?>index.php/Usuarios/Crear_Usuario",
+							data: $('#frmNuevoUsuario').serialize(),
 							success: function(msg){																					
 								var msg_substr = msg.split("@", 4);
 								var msg_html = msg_substr[0];
@@ -118,16 +238,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								$("#span_notif_count").html(msg_cont_notif);         																																																																					
 								$('#modal_notificaciones').modal();								
 								if (msg_result=="T"){																				
-									$("#modalNuevaInstitucion").modal('hide');																				
-									$('#tbInstituciones').DataTable().ajax.reload(null, false);
-									$('#tbInstituciones').DataTable().page('last');
+									$("#modalNuevoUsuario").modal('hide');																				
+									$('#tbCliente').DataTable().ajax.reload(null, false);
+									$('#tbCliente').DataTable().page('last');
 									$("#div_col_val_errors").html("");
 								}else{
 									$("#div_col_val_errors").html(msg_val_errors);
 								}									
 							},
 							error: function(){
-								alert("Ocurri? un error al procesar la petici?n servidor.");
+								alert("Ocurrió un error al procesar la petición al servidor.");
 							}
 						});
 					});
@@ -221,42 +341,75 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </script>					
 				
 				<!-- Ventana modal del formulario para editar un registro -->	
-				<div class='modal fade' id='modalVerInstitucion'>
+				<div class='row'>
+			<div class='col-md-12'>		
+		
+				<!-- Ventana modal del formulario para crear un nuevo registro -->	
+				<div class='modal fade' id='modalVerUsuario'>
+					<!--SI SE DESEA MODIFICAR EL ANCHO DE LA VENTANA style='width: 700px;'-->
 					<div class='modal-dialog'>
 						<div class='modal-content'>
-							<div class='modal-header'>
-								<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-									<h4 class='modal-title'>Institución</h4>
+							<div style="background-color: #000053;" class='modal-header'>
+								<!--<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>-->
+									<h4 style="color: white;" class='modal-title'>Visualizar información del usuario</h4>
 							</div>
 							<div class='modal-body'>
+
 								<div class='row'>
 									<div class='col-md-4'>
-										Id. de la Institución:
+										Nombre de usuario:
 									</div>
+									<br>
 									<div class='col-md-8'>
 										<div class='form-group'>											
-											<p id='p_v_id_institucion' name='p_v_id_institucion'></p>
+										<p style="color:orange; font-size: 17px; font-weight: bold;" id='p_v_usuario' name='p_v_usuario'></p>
 										</div>
 									</div>
 								</div>
+
 								<div class='row'>
 									<div class='col-md-4'>
-										Nombre de la Institución:
+										Correo:
 									</div>
+									<br>
 									<div class='col-md-8'>
-										<div class='form-group'>
-											<p id='p_v_institucion' name='p_v_institucion'></p>										
+										<div class='form-group'>											
+										<p style="color:orange; font-size: 17px; font-weight: bold;" id='p_v_correo' name='p_v_correo'></p>
+										</div>
+									</div>
+								</div>
+
+								<div class='row'>
+									<div class='col-md-4'>
+										Cargo:
+									</div>
+									<br>
+									<div class='col-md-8'>
+										<div class='form-group'>											
+										<p style="color:orange; font-size: 17px; font-weight: bold;" id='p_v_cargo' name='p_v_cargo'></p>
+										</div>
+									</div>
+								</div>
+
+								<div class='row'>
+									<div class='col-md-4'>
+										Rol de administrador:
+									</div>
+									<br>
+									<div class='col-md-8'>
+										<div class='form-group'>											
+										<p style="color:orange; font-size: 17px; font-weight: bold;" id='p_v_rol' name='p_v_rol'></p>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class='modal-footer'>
-								<button type='button' class='btn btn-default' data-dismiss='modal'>Cerrar</button>
+							<div style="background-color: #000053;" class='modal-footer'>
+								<button type='button' class='btn btn-close' data-dismiss='modal'>Cancelar</button>
 							</div>
 							</form>
 						</div>
 					</div>
-				</div>		
+				</div>			
 
 				
 				
@@ -264,11 +417,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<table id='tbCliente' name='tbCliente' class='display cell-border order-column dt-responsive'>
 					<thead>
 						<tr>							
-							<th style='width: 50px;'>Matricula				
+							<th style='width: 50px;'>Matrícula				
 							<th>Nombre
 							<th>Correo
 							<th>Cargo
-							<th>Rol_admin
+							<th>Rol de administrador
 							<th>Contraseña
 										
 					</thead>

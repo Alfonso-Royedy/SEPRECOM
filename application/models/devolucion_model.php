@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class devolucion_model extends CI_Model {			
+class Devolucion_model extends CI_Model {			
 	
 	public function Obtener_Prestamo(){			
 		$qry = "SELECT devolucion.*, producto.nombre_producto

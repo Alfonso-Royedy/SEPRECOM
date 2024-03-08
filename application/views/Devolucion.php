@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<title>Prestamos</title>
+	<title>Préstamos</title>
 
 <?php
 	require "third_party/jquery.js";
@@ -40,7 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<ol class='breadcrumb main_breadcrumb'>
 					<li><a class='color_amarillo' href='principal'><?php echo $this->config->item('mycfg_nombre_aplicacion'); ?></a></li>
 					<li class='color_amarillo'>Procesos</li>											
-					<li class='active' style='color: white;'>Prestamos</li>											
+					<li class='active' style='color: white;'>Préstamos</li>											
 				</ol>
 			</div>		
 			
@@ -105,52 +105,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						</script>
 
-					<!-- Indicates a successful or positive action -->
-					<button style="margin-bottom: 15px;" type="button" id="EliminarElemento" class="btn btn-primary">Eliminar</button>
-							<script>
-								$(document).ready(function () {
-									$("#EliminarElemento").click(function(){
-										// Se obtienen los datos del registro seleccionado de la tabla
-										var count = $('#tbSolicitudes').DataTable().rows({ selected: true }).count();
-										if (count == 1) {
-											var rows = $('#tbSolicitudes').DataTable().rows({ selected: true }).indexes();
-											var data = $('#tbSolicitudes').DataTable().rows(rows).data();
-											
-											// Verificar el estado antes de mostrar el cuadro de confirmación
-											if (data[0].estado === "Prestado") {
-												var respuesta = confirm('¿Está seguro que desea eliminar el préstamo: ' + data[0].id_prestamo + '?');
-												if (respuesta) {
-													$.ajax({
-														type: "POST",
-														url: "<?php echo base_url();?>index.php/Devolucion/Eliminar_Prestamo",
-														data: {"id_prestamo" : data[0].id_prestamo},
-														success: function(msg){                                                            
-															var msg_substr = msg.split("@", 3);
-															var msg_html = msg_substr[0];
-															var msg_cont_notif = msg_substr[1];
-															var msg_result = msg_substr[2];
-															$('#div_notifications_content').html(msg_html);    
-															$("#span_notif_count").html(msg_cont_notif);         
-															$('#modal_notificaciones').modal();
-															if (msg_result == "T") {                                                                        
-																$('#tbSolicitudes').DataTable().ajax.reload(null, false);
-															}                                                                                                
-														},
-														error: function(){
-															alert("Ocurrió un error al procesar la petición al servidor.");
-														}
-													});
-												}
-											} else {
-												alert('No se permite eliminar registros con estado "devuelto".');
-											}
-										} else {
-											alert('Debe elegir un registro');
-										}
-									});
-								});
-							</script>
-
 					<!-- Contextual button for informational alert messages -->
 					<button style="margin-bottom: 15px;" type="button" id="VerElemento" class="btn btn-primary">Ver Información</button>
 						<script>
@@ -199,83 +153,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 				</div>
 
-
-		<!-- Espacio disponible para mostrar informaci?n del portal -->	
-		<div class='row'>
-			<div class='col-md-12'>		
-		
-				<!-- Ventana modal del formulario para crear un nuevo registro -->	
-				<div class='modal fade' id='modalNuevaInstituc'>
-					<!--SI SE DESEA MODIFICAR EL ANCHO DE LA VENTANA style='width: 700px;'-->
-					<div class='modal-dialog'>
-						<div class='modal-content'>
-							<div class='modal-header'>
-								<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-									<h4 class='modal-title'>Nueva Institución</h4>
-							</div>
-							<div class='modal-body'>
-<?php 
-							echo form_open("instituciones/crear_institucion","id='frmNuevaInstitucion' name='frmNuevaInstitucion' role='form'"); 
-?>												
-								<div class='row'>												
-									<div class='col-md-12' id='div_col_val_errors' name='div_col_val_errors'>										
-									</div>
-								</div>
-								<div class='row'>
-									<div class='col-md-4'>
-										Nombre de la Institución:
-									</div>
-									<div class='col-md-8'>
-										<div class='form-group'>											
-<?php 
-											EditBox("institucion","institucion","form-control","",1, 255,255,false,set_value('institucion'),"",false,"Nombre de la Institución","");												
-?>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class='modal-footer'>
-								<button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
-								<button type='button' class='btn btn-primary' id='btnGuardarNuevaInstitucion' name='btnGuardarNuevaInstitucion' value='Guardar'><span class='glyphicon glyphicon-floppy-disk'></span> Guardar</button>
-							</div>
-							</form>
-						</div>
-					</div>
-				</div>				
-
-<script>															
-				$(document).ready(function () {
-					$("#btnGuardarNuevaInstitucion").click(function(){
-						$.ajax({
-							type: "POST",
-							url: "<?php echo base_url();?>index.php/instituciones/crear_institucion",
-							data: $('#frmNuevaInstitucion').serialize(),
-							success: function(msg){																					
-								var msg_substr = msg.split("@", 4);
-								var msg_html = msg_substr[0];
-								var msg_cont_notif = msg_substr[1];
-								var msg_result = msg_substr[2];
-								var msg_val_errors = msg_substr[3];
-								$('#div_notifications_content').html(msg_html);	
-								$("#span_notif_count").html(msg_cont_notif);         																																																																					
-								$('#modal_notificaciones').modal();								
-								if (msg_result=="T"){																				
-									$("#modalNuevaInstitucion").modal('hide');																				
-									$('#tbInstituciones').DataTable().ajax.reload(null, false);
-									$('#tbInstituciones').DataTable().page('last');
-									$("#div_col_val_errors").html("");
-								}else{
-									$("#div_col_val_errors").html(msg_val_errors);
-								}									
-							},
-							error: function(){
-								alert("Ocurri? un error al procesar la petici?n servidor.");
-							}
-						});
-					});
-										
-				});
-</script>	
 				
 				<!-- Ventana modal del formulario para editar un registro -->	
 				<div class='modal fade' id='modalDevolucion'>
@@ -301,8 +178,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 
 								<div class='row'>
-									<div class='col-md-5'>
-										Nombre de quién recibe devolución:
+									<div class='col-md-8'>
+										Responsable de la devolución:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>									
@@ -314,7 +191,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>						
 
 								<div class='row'>
-									<div class='col-md-5'>
+									<div class='col-md-8'>
 										Equipo o accesorio solicitado:
 									</div>
 									<br>
@@ -329,7 +206,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										observación:
+										Observación:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>									
@@ -341,8 +218,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 
 								<div class='row'>
-									<div class='col-md-4'>
-										Fecha devolucion:
+									<div class='col-md-8'>
+										Fecha de devolucion:
 									</div>
 									<br>
 									<div class='col-md-8'>
@@ -356,7 +233,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Estado del prestamo:
+										Estado del préstamo:
 									</div>
 									<br>
 									<div class='col-md-8'>
@@ -405,7 +282,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}									
 							},
 							error: function(){
-								alert("Ocurrió un error al procesar la petición servidor.");
+								alert("Ocurrió un error al procesar la petición al servidor.");
 							}
 						});
 					});
@@ -432,7 +309,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Id Prestamo:
+										Id préstamo:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>											
@@ -442,7 +319,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 								<div class='row'>
 									<div class='col-md-5'>
-										Nombre del producto(Id):
+										Nombre del producto:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -452,8 +329,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 
 								<div class='row'>
-									<div class='col-md-5'>
-										encargado de la devolución:
+									<div class='col-md-8'>
+										Responsable de la devolución:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -464,7 +341,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Fecha de la devolución:
+										Fecha de devolución:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -475,7 +352,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										observaciones:
+										Observaciones:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -486,7 +363,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Id de la solicitud:
+										Id de solicitud:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -497,7 +374,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Estado del prestamo:
+										Estado del préstamo:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -523,13 +400,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<table id='tbSolicitudes' name='tbSolicitudes' class='display cell-border order-column dt-responsive'>
 					<thead>
 						<tr>							
-							<th>id_prestamo					
-							<th>id_producto
-							<th>encargado_devo
-							<th>fecha_devo
-							<th>observaciones
-							<th>id_solicitud
-							<th>estado
+							<th>Id. préstamo					
+							<th>Producto
+							<th>Encargado de devolución
+							<th>Fecha de devolución
+							<th>Observaciones
+							<th>Id de solicitud
+							<th>Estado
 					</thead>
 					<tfoot>
 						<tr>																										
@@ -600,8 +477,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							ajax: '<?php echo base_url();?>index.php/Devolucion/Obtener_Dataset_Prestamo',
 							autoWidth: false,							
 							columns: [								
-								{ data: "id_prestamo" },
-								{ data: "id_producto" },
+								{ data: "id_prestamo", visible: false},
+								{ data: "nombre_producto" },
 								{ data: "encargado_devo" },
 								{ data: "fecha_devo" },
 								{ data: "observaciones" },

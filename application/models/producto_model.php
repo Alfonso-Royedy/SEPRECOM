@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class producto_model extends CI_Model {			
+class Producto_model extends CI_Model {			
 	
 	public function Obtener_Producto(){			
 		$qry = "SELECT * FROM producto WHERE id_producto IS NOT NULL";

@@ -2,21 +2,21 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class prestamo extends CI_Controller {	
+class Prestamo extends CI_Controller {	
 
 	public function index(){
 		if($this->session->userdata($this->config->item('mycfg_session_object_name'))){	
 			$session_data = $this->session->userdata($this->config->item('mycfg_session_object_name'));							
 			$this->load->database($this->Seguridad_SIIA_Model->Obtener_DBConfig_Values($this->config->item('mycfg_usuario_conexion'),$this->config->item('mycfg_pwd_usuario_conexion')));			
 			
-			$this->load->model('cliente_model');
-			$data['array_cliente']=$this->cliente_model->Obtener_Array_Nombre_Cliente();
+			$this->load->model('Cliente_model');
+			$data['array_cliente']=$this->Cliente_model->Obtener_Array_Nombre_Cliente();
 
-			$this->load->model('prestamo_model');
-			$data['array_prestador']=$this->prestamo_model->Obtener_Array_Nombre_prestador();
+			$this->load->model('Prestamo_model');
+			$data['array_prestador']=$this->Prestamo_model->Obtener_Array_Nombre_prestador();
 
-			$this->load->model('producto_model');
-			$data['array_producto']=$this->producto_model->Obtener_Array_Nombre_Producto();
+			$this->load->model('Producto_model');
+			$data['array_producto']=$this->Producto_model->Obtener_Array_Nombre_Producto();
 
 			$data['menu']=$this->Seguridad_SIIA_Model->Crear_Menu_Usuario($this->config->item('mycfg_id_aplicacion'),$session_data['default_pfc'],"Procesos","Solicitudes");						
 
@@ -33,8 +33,8 @@ class prestamo extends CI_Controller {
 			$this->load->database($this->Seguridad_SIIA_Model->Obtener_DBConfig_Values($this->config->item('mycfg_usuario_conexion'),$this->config->item('mycfg_pwd_usuario_conexion')));				
 			
 			//Se armar? un json array con los registros de la consulta, este json alimentar? el datatable
-            $this->load->model('prestamo_model');	
-			$resPrestamo=$this->prestamo_model->Obtener_Prestamo();										
+            $this->load->model('Prestamo_model');	
+			$resPrestamo=$this->Prestamo_model->Obtener_Prestamo();										
 			
 			if ($resPrestamo){
 				while ($rowPrestamo=$resPrestamo->unbuffered_row('array')){				
@@ -135,18 +135,18 @@ class prestamo extends CI_Controller {
                 );
     
                 // Insertar la solicitud en la base de datos
-                $this->load->model('prestamo_model');
-                $id_solicitud = $this->prestamo_model->Crear_Data_Solicitud($solicitud_data);
+                $this->load->model('Prestamo_model');
+                $id_solicitud = $this->Prestamo_model->Crear_Data_Solicitud($solicitud_data);
 
                     // Obtener los datos del formulario para el préstamo
                     $equipo_solicitado1 = $this->input->post('Equipo_Solicitado1');
                     $equipo_solicitado2 = $this->input->post('Equipo_Solicitado2');
                     $equipo_solicitado3 = $this->input->post('Equipo_Solicitado3');
 
-                    $this->load->model('devolucion_model');
+                    $this->load->model('Devolucion_model');
 
                         // Crear el préstamo con los productos
-                    $id_prestamo = $this->devolucion_model->crearPrestamoConProductos($equipo_solicitado1, $equipo_solicitado2, $equipo_solicitado3);
+                    $id_prestamo = $this->Devolucion_model->crearPrestamoConProductos($equipo_solicitado1, $equipo_solicitado2, $equipo_solicitado3);
 
 
                     if ($id_solicitud) {
@@ -179,8 +179,8 @@ class prestamo extends CI_Controller {
 			$Operacion_Borrado_Exitosa=false;
 			$this->db->trans_begin();
 			
-			$this->load->model('prestamo_model');
-			$Solicitud_Eliminar=$this->prestamo_model->Eliminar_Solicitud($this->input->post('id_solicitud'));															
+			$this->load->model('Prestamo_model');
+			$Solicitud_Eliminar=$this->Prestamo_model->Eliminar_Solicitud($this->input->post('id_solicitud'));															
 			
 			if ($Solicitud_Eliminar){
 				$this->db->trans_commit();
@@ -303,8 +303,8 @@ class prestamo extends CI_Controller {
 				$Operacion_Edicion_Exitosa=false;
 				$this->db->trans_begin();								
 				
-				$this->load->model('prestamo_model');
-				$Solicitud_Editada=$this->prestamo_model->Editar_Solicitud($this->input->post('e_id_Solicitud'),$this->input->post('Nombre_Solicitante1'),$this->input->post('Edificio1'),$this->input->post('Tipo_Area1'),$this->input->post('Id_Area1'),$this->input->post('Encargado1'),$this->input->post('Fecha_solicitud1'));
+				$this->load->model('Prestamo_model');
+				$Solicitud_Editada=$this->Prestamo_model->Editar_Solicitud($this->input->post('e_id_Solicitud'),$this->input->post('Nombre_Solicitante1'),$this->input->post('Edificio1'),$this->input->post('Tipo_Area1'),$this->input->post('Id_Area1'),$this->input->post('Encargado1'),$this->input->post('Fecha_solicitud1'));
 				
 				if ($Solicitud_Editada){
 					$this->db->trans_commit();

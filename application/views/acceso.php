@@ -43,11 +43,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       
 		  <?php				
 				echo form_open("acceso/login","role='form'");
-					echo "Username";
-					EditBox("username","username","form-control","",1, 50,8,false,set_value('username'),"",false,"Username","autofocus");												
+					echo "Nombre de usuario:";
+					EditBox("username","username","form-control","",1, 50,8,false,set_value('username'),"",false,"Ingrese su usuario","autofocus");												
 					echo "<font class='font_notif_error'>".form_error('username')."</font><br>"; 					
-					echo "Password";
-					EditBox("password","password","form-control","",1, 20,20,true,"","",false,"Password","");												
+					echo "Contraseña:";
+					EditBox("password","password","form-control","",1, 20,20,true,"","",false,"Ingrese su contraseña","");												
 					echo "<font class='font_notif_error'>".form_error('password')."</font><br>";
 			?>					
 					<input type='submit' class='fadeIn fourth' name='btn_ingresar' value='Ingresar'>

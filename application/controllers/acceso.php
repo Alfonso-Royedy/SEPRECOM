@@ -4,15 +4,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Acceso extends CI_Controller {
 	
-	public function index()	{	    		
+	public function index()	{ 	
 		$this->load->view('acceso');		
 	}		
 	
 	public function login(){
 		$this->load->database($this->Seguridad_SIIA_Model->Obtener_DBConfig_Values($this->config->item('mycfg_usuario_conexion'),$this->config->item('mycfg_pwd_usuario_conexion')));
 	
-		$this->form_validation->set_rules('username', 'Username', 'required|xss_clean', array('required' => 'Debe proporcionar un %s.'));
-		$this->form_validation->set_rules('password', 'Password', 'required|xss_clean', array('required' => 'Debe proporcionar un %s.'));
+		$this->form_validation->set_rules('username', 'Nombre de usuario', 'required|xss_clean', array('required' => 'Debe proporcionar un %s.'));
+		$this->form_validation->set_rules('password', 'Contraseña', 'required|xss_clean', array('required' => 'Debe proporcionar una %s.'));
 	
 		if ($this->form_validation->run() == FALSE)	{
 			$this->load->view('acceso');
@@ -21,7 +21,7 @@ class Acceso extends CI_Controller {
 	
 			// Verificar si se obtuvieron datos del usuario
 			if (!$rowUsuario) {
-				MostrarNotificacion("El Username o Password no son válidos.", "Error", true);
+				MostrarNotificacion("El Nombre de usuario y la Contraseña no son válidos.", "Error", true);
 				$this->load->view('acceso');
 				return;
 			}

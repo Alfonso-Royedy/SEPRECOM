@@ -60,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class='row'>
 			<div class='col-md-12'>
 				<div class="jumbotron">
-					<h1 style="font-style: italic;">Bienvenido <font color='#000053'><?php echo $session_data['full_name']; ?></font></h1>
+					<h1 style="font-style: italic;">Bienvenido, <font color='#000053'><?php echo $session_data['full_name']; ?></font></h1>
 				</div>						
 			</div>	
 		</div>
@@ -71,9 +71,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					
 					<div style="text-align: center; cursor: pointer;" class="col-md-4" id="Rprestamo">			
 						<a style="text-decoration: none;background-color:#FFCD00;" class="thumbnail">
-							<h4 style="color:#000053">Solicitar prestamo</h4>	
+							<h4 style="color:#000053">Solicitar préstamo</h4>	
 							<img style="width: 100px; padding: 10px;background-color:#000053; border-radius: 15px;" src="<?php echo base_url(); ?>application/views/imagenes/catalogo.png" alt="...">		  
-							<p style="text-align: center; margin: 10px; color: #000053; --darkreader-inline-color: #bbb3a7;" data-darkreader-inline-color="">Haga clic aquí para realizar un prestamo.</p>
+							<p style="text-align: center; margin: 10px; color: #000053; --darkreader-inline-color: #bbb3a7;" data-darkreader-inline-color="">Haga clic aquí para realizar un préstamo.</p>
 						</a>			  				  
 						<div class="w-100"></div>
 						<div class="row">							
@@ -90,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>
 							<div class='modal-body'>
 <?php 
-							echo form_open("prestamo/Crear_Solicitud","id='frmPrestamo' name='frmPrestamo' role='form'"); 
+							echo form_open("Prestamo/Crear_Solicitud","id='frmPrestamo' name='frmPrestamo' role='form'"); 
 								//Agregamos los campos de la llave primaria como campos de tipo hidden
 						
 ?>												
@@ -101,7 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Nombre de quién entrega:
+										Responsable de la entrega:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>									
@@ -114,7 +114,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Num. del solicitante:
+										Nombre del solicitante:
 									</div>
 									<br>
 									<div class='col-md-8'>
@@ -135,14 +135,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>
 									
 									<div style="flex: 0 0 auto; margin-right: 10px;">
-										<div>Tipo Area:</div>
+										<div>Tipo área:</div>
 										<div style="width: 100px; margin-top: 5px;" class='form-group'>
 											<?php ComboBox("Tipo_Area","Tipo_Area","form-control","",1,false,1,array("AULA"=>"AULA","SALA CIC"=>"SALA CIC","EXTERNA"=>"EXTERNA","I+D+I"=>"I+D+I","LABORATORIO"=>"LABORATORIO","CUBICULO"=>"CUBICULO","COORDINACION"=>"COORDINACION","SITE"=>"SITE"),"","","","Elige el area"); ?>
 										</div>
 									</div>
 
 									<div style="flex: 0 0 auto; margin-right: 10px;">
-										<div>ID Area:</div>
+										<div>ID área:</div>
 										<div style="width: 100px; margin-top: 5px;" class='form-group'>
 											<?php ComboBox("Id_Area","Id_Area","form-control","",1,false,1,array("1" => "1","2" => "2","3" => "3","4" => "4","5" => "5","6" => "6","7" => "7","8" => "8","9" => "9","10" => "10","11" => "11","12" => "12","13" => "13","14" => "14","15" => "15","16" => "16","17" => "17","18" => "18","19" => "19","20" => "20","21" => "21","22" => "22","23" => "23","24" => "24","25" => "25","26" => "26","27" => "27","28" => "28","29" => "29","30" => "30","31" => "31","32" => "32","33" => "33","34" => "34","35" => "35","36" => "36","37" => "37","38" => "38","39" => "39","40" => "40","41" => "41","42" => "42","43" => "43","44" => "44","45" => "45","46" => "46","47" => "47","48"=>"48"),"","","","id del area"); ?>
 											
@@ -182,7 +182,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-4'>
-										Fecha solicitado:
+										Fecha de solicitud:
 									</div>
 									<br>
 									<div class='col-md-8'>
@@ -222,9 +222,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												
 					<div style="text-align: center; cursor: pointer;" class="col-md-4" id="Verprestamo">			
 						<a style="text-decoration: none;background-color:#FFCD00;" href='<?php echo base_url();?>index.php/prestamo' class="thumbnail">
-							<h4 style="color:#000053">Ver Prestamos</h4>	
+							<h4 style="color:#000053">Ver préstamos</h4>	
 							<img style="width: 100px; padding: 10px;background-color:#000053; border-radius: 15px;" src="<?php echo base_url(); ?>application/views/imagenes/ver.png" alt="...">			  
-							<p style="text-align: center; margin: 10px; color: #000053; --darkreader-inline-color: #bbb3a7;" data-darkreader-inline-color="">Haga clic aquí para observar registro de prestamos.</p>		  
+							<p style="text-align: center; margin: 10px; color: #000053; --darkreader-inline-color: #bbb3a7;" data-darkreader-inline-color="">Haga clic aquí para observar registro de préstamos.</p>		  
 						</a>
 						<div class="w-100"></div>
 						<div class="row">							
@@ -233,9 +233,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 					<div style="text-align: center; cursor: pointer;" class="col-md-4" id="Vperfil">			
 						<a style="text-decoration: none;background-color:#FFCD00;" href='<?php echo base_url();?>index.php/devolucion' class="thumbnail">
-							<h4 style="color:#000053">Realizar Devolución</h4>
+							<h4 style="color:#000053">Realizar devolución</h4>
 							<img style="width: 100px; padding: 10px;background-color:#000053; border-radius: 15px;" src="<?php echo base_url(); ?>application/views/imagenes/devolucion-de-producto.png" alt="...">			  
-							<p style="text-align: center; margin: 10px; color: #000053; --darkreader-inline-color: #bbb3a7;" data-darkreader-inline-color="">Haga clic aquí para realizar la devolucion.</p>
+							<p style="text-align: center; margin: 10px; color: #000053; --darkreader-inline-color: #bbb3a7;" data-darkreader-inline-color="">Haga clic aquí para realizar la devolución.</p>
 						</a>
 						<div class="w-100"></div>
 						<div class="row">							
@@ -253,7 +253,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						$(this).prop("disabled", true).html("<span class='glyphicon glyphicon-floppy-disk'></span> Guardando....");
 						$.ajax({
 							type: "POST",
-							url: "<?php echo base_url();?>index.php/prestamo/Crear_Solicitud",
+							url: "<?php echo base_url();?>index.php/Prestamo/Crear_Solicitud",
 							data: $('#frmPrestamo').serialize(),
 							success: function(msg){																					
 								var msg_substr = msg.split("@", 4);

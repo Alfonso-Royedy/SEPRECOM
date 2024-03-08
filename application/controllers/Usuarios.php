@@ -23,9 +23,9 @@ class Usuarios extends CI_Controller {
 			$session_data = $this->session->userdata($this->config->item('mycfg_session_object_name'));							
 			$this->load->database($this->Seguridad_SIIA_Model->Obtener_DBConfig_Values($this->config->item('mycfg_usuario_conexion'),$this->config->item('mycfg_pwd_usuario_conexion')));				
 			
-			$this->load->model('cliente_model');
+			$this->load->model('Cliente_model');
 			//Se armar? un json array con los registros de la consulta, este json alimentar? el datatable		
-			$resClientes=$this->cliente_model->Obtener_Cliente();									
+			$resClientes=$this->Cliente_model->Obtener_Cliente();									
 			
 			if ($resClientes){
 				while ($rowCliente=$resClientes->unbuffered_row('array')){				
@@ -48,7 +48,7 @@ class Usuarios extends CI_Controller {
 		}
 	}
 	
-	public function Eliminar_Institucion(){		
+	public function Eliminar_Usuario(){		
 		if($this->session->userdata($this->config->item('mycfg_session_object_name'))){		
 			$session_data = $this->session->userdata($this->config->item('mycfg_session_object_name'));							
 			$this->load->database($this->Seguridad_SIIA_Model->Obtener_DBConfig_Values($this->config->item('mycfg_usuario_conexion'),$this->config->item('mycfg_pwd_usuario_conexion')));				
@@ -56,15 +56,16 @@ class Usuarios extends CI_Controller {
 			$Operacion_Borrado_Exitosa=false;
 			$this->db->trans_begin();								
 			
-			$Institucion_Eliminada=$this->Gestion_Instituciones_Model->Eliminar_Institucion($this->input->post('id_institucion'));															
+			$this->load->model('Cliente_model');
+			$Usuario_Eliminado=$this->Cliente_model->Eliminar_Matricula($this->input->post('matricula'));															
 			
-			if ($Institucion_Eliminada){
+			if ($Usuario_Eliminado){
 				$this->db->trans_commit();
-				MostrarNotificacion("Se elimino la institución exitosamente","OK",true);
+				MostrarNotificacion("Se elimino al usuario exitosamente","OK",true);
 				$Operacion_Borrado_Exitosa=true;
 			}else{
 				$this->db->trans_rollback();
-				MostrarNotificacion("Ocurrio un error al intentar eliminar la institución","Error",true);
+				MostrarNotificacion("Ocurrio un error al intentar eliminar el usuario","Error",true);
 			}
 			
 			echo "@".Obtener_Contador_Notificaciones();
@@ -79,10 +80,25 @@ class Usuarios extends CI_Controller {
 			
 	}
 	
-	public function Crear_Institucion(){
+	public function Crear_Usuario(){
 		if($this->session->userdata($this->config->item('mycfg_session_object_name'))){	
 			//los valores de tipo cadena deben decodificarse de utf8 para que lo almacena correctamente
-			$this->form_validation->set_rules('institucion', 'Nombre de la institución', "required|xss_clean|strtoupper|utf8_decode",																							
+			$this->form_validation->set_rules('Usuario1', 'Nombre de usuario', "required|xss_clean|strtoupper|utf8_decode",																							
+												array(
+													'required' => 'Debe proporcionar un %s.'
+												)
+											);
+			$this->form_validation->set_rules('Correo1', 'correo', "required|xss_clean|strtoupper|utf8_decode",																							
+												array(
+													'required' => 'Debe proporcionar un %s.'
+												)
+											);
+			$this->form_validation->set_rules('Cargo1', 'cargo', "required|xss_clean|strtoupper|utf8_decode",																							
+												array(
+													'required' => 'Debe proporcionar un %s.'
+												)
+											);
+			$this->form_validation->set_rules('Rol_adm', 'rol de administrador', "required|xss_clean|strtoupper|utf8_decode",																							
 												array(
 													'required' => 'Debe proporcionar un %s.'
 												)
@@ -100,15 +116,16 @@ class Usuarios extends CI_Controller {
 				$Operacion_Creacion_Exitosa=false;
 				$this->db->trans_begin();								
 				
-				$Institucion_Creada=$this->Gestion_Instituciones_Model->Crear_Institucion($this->input->post('institucion'));
+				$this->load->model('Cliente_model');
+				$Usuario_Creada=$this->Cliente_model->Crear_Usuario($this->input->post('Usuario1'),$this->input->post('Correo1'),$this->input->post('Cargo1'),$this->input->post('Rol_adm'));
 				
-				if ($Institucion_Creada){
+				if ($Usuario_Creada){
 					$this->db->trans_commit();
-					MostrarNotificacion("Se creó la institución exitosamente","OK",true);
+					MostrarNotificacion("Se creó el usuario exitosamente","OK",true);
 					$Operacion_Creacion_Exitosa=true;
 				}else{
 					$this->db->trans_rollback();
-					MostrarNotificacion("Ocurrio un error al intentar crear la institución","Error",true);
+					MostrarNotificacion("Ocurrio un error al intentar crear el usuario","Error",true);
 				}
 				
 				echo "@".Obtener_Contador_Notificaciones();

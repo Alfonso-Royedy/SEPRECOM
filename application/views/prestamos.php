@@ -106,45 +106,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								});
 							</script>
 
-					<!-- Indicates a successful or positive action -->
-					<button style="margin-bottom: 15px;" type="button" id="EliminarElemento" class="btn btn-primary">Eliminar</button>
-							<script>
-								$(document).ready(function () {
-									$("#EliminarElemento").click(function(){
-										//se obtienen los datos del registro seleccionado de la tabla
-										var count = $('#tbPrestamo').DataTable().rows({ selected: true }).count();
-										if (count==1){
-											var rows =  $('#tbPrestamo').DataTable().rows({ selected: true }).indexes();
-											var data =  $('#tbPrestamo').DataTable().rows( rows ).data();												
-											var respuesta = confirm('¡Está seguro que desea eliminar la Solicitud: '+data[0].id_solicitud+'?');
-											if (respuesta){										
-												$.ajax({
-													type: "POST",
-													url: "<?php echo base_url();?>index.php/prestamo/Eliminar_Solicitud",
-													data: {"id_solicitud" : data[0].id_solicitud},
-													success: function(msg){															
-														var msg_substr = msg.split("@", 3);
-														var msg_html = msg_substr[0];
-														var msg_cont_notif = msg_substr[1];
-														var msg_result = msg_substr[2];
-														$('#div_notifications_content').html(msg_html);	
-														$("#span_notif_count").html(msg_cont_notif);         
-														$('#modal_notificaciones').modal();
-														if (msg_result=="T"){																																	
-															$('#tbPrestamo').DataTable().ajax.reload(null, false);
-														}																								
-													},
-													error: function(){
-														alert("Ocurrió error al procesar la petición al servidor.");
-													}
-												});
-											}	
-										}else{
-											alert('Debe elegir un registro');
-										}
-									});
-								});
-							</script>
 
 					<!-- Contextual button for informational alert messages -->
 					<button style="margin-bottom: 15px;" type="button" id="VerElemento" class="btn btn-primary">Ver Información</button>
@@ -186,7 +147,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$("#btnGuardarSolicitud").click(function(){
 						$.ajax({
 							type: "POST",
-							url: "<?php echo base_url();?>index.php/prestamo/Crear_Solicitud",
+							url: "<?php echo base_url();?>index.php/Prestamo/Crear_Solicitud",
 							data: $('#frmPrestamo').serialize(),
 							success: function(msg){																					
 								var msg_substr = msg.split("@", 4);
@@ -207,7 +168,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								}									
 							},
 							error: function(){
-								alert("Ocurrio un error al procesar la petici?n servidor.");
+								alert("Ocurrio un error al procesar la petición al servidor.");
 							}
 						});
 					});
@@ -225,7 +186,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>
 							<div class='modal-body'>
 <?php 
-							echo form_open("prestamo/Crear_Solicitud","id='frmPrestamo' name='frmPrestamo' role='form'"); 
+							echo form_open("Prestamo/Crear_Solicitud","id='frmPrestamo' name='frmPrestamo' role='form'"); 
 								//Agregamos los campos de la llave primaria como campos de tipo hidden
 						
 ?>												
@@ -235,8 +196,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 
 								<div class='row'>
-									<div class='col-md-5'>
-										Nombre de quién entrega:
+									<div class='col-md-8'>
+										Responsable de la entrega:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>									
@@ -270,16 +231,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>
 									
 									<div style="flex: 0 0 auto; margin-right: 10px;">
-										<div>Tipo Area:</div>
+										<div>Tipo de área:</div>
 										<div style="width: 100px; margin-top: 5px;" class='form-group'>
 										<?php ComboBox("Tipo_Area","Tipo_Area","form-control","",1,false,1,array("AULA"=>"AULA","SALA CIC"=>"SALA CIC","EXTERNA"=>"EXTERNA","I+D+I"=>"I+D+I","LABORATORIO"=>"LABORATORIO","CUBICULO"=>"CUBICULO","COORDINACION"=>"COORDINACION","SITE"=>"SITE"),"","","","Elige el area"); ?>
 										</div>
 									</div>
 
 									<div style="flex: 0 0 auto; margin-right: 10px;">
-										<div>ID Area:</div>
+										<div>Id de área:</div>
 										<div style="width: 100px; margin-top: 5px;" class='form-group'>
-											<?php ComboBox("Id_Area","Id_Area","form-control","",1,false,1,array("1"=>"1","2"=>"2"),"","","","id del area"); ?>
+											<?php ComboBox("Id_Area","Id_Area","form-control","",1,false,1,array("1" => "1","2" => "2","3" => "3","4" => "4","5" => "5","6" => "6","7" => "7","8" => "8","9" => "9","10" => "10","11" => "11","12" => "12","13" => "13","14" => "14","15" => "15","16" => "16","17" => "17","18" => "18","19" => "19","20" => "20","21" => "21","22" => "22","23" => "23","24" => "24","25" => "25","26" => "26","27" => "27","28" => "28","29" => "29","30" => "30","31" => "31","32" => "32","33" => "33","34" => "34","35" => "35","36" => "36","37" => "37","38" => "38","39" => "39","40" => "40","41" => "41","42" => "42","43" => "43","44" => "44","45" => "45","46" => "46","47" => "47","48"=>"48"),"","","","id del area"); ?>
 										</div>
 									</div>
 								</div>
@@ -316,7 +277,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-4'>
-										Fecha solicitado:
+										Fecha de solicitud:
 									</div>
 									<br>
 									<div class='col-md-8'>
@@ -363,7 +324,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							</div>
 							<div class='modal-body'>
 <?php 
-							echo form_open("prestamo/Editar_Solicitud","id='frmEditarPrestamo' name='frmEditarPrestamo' role='form'"); 
+							echo form_open("Prestamo/Editar_Solicitud","id='frmEditarPrestamo' name='frmEditarPrestamo' role='form'"); 
 								
 									//Agregamos los campos de la llave primaria como campos de tipo hidden
 									echo form_input(array("type"=>"hidden","name"=>"e_id_Solicitud","id"=>"e_id_Solicitud","value"=>""));
@@ -375,8 +336,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 
 								<div class='row'>
-									<div class='col-md-5'>
-										Nombre de quién entrega:
+									<div class='col-md-8'>
+										Responsable de la entrega:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>									
@@ -388,13 +349,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								</div>
 
 								<div class='row'>
-									<div class='col-md-4'>
-										Id. de la solicitud:
-									</div>
 									<div class='col-md-8'>
+										Id. de solicitud:
+									</div>
+									<br>
+									<div class='col-md-4'>
 										<div class='form-group'>											
 											<!-- Mostramos los valores de la llave primaria como textos no editables <p></p> -->
-											<p id='p_e_id_solicitud' name='p_e_id_solicitud'></p>
+											<p style="color:orange; font-size: 17px; font-weight: bold;" id='p_e_id_solicitud' name='p_e_id_solicitud'></p>
 										</div>
 									</div>
 								</div>
@@ -422,14 +384,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>
 									
 									<div style="flex: 0 0 auto; margin-right: 10px;">
-										<div>Tipo Area:</div>
+										<div>Tipo área:</div>
 										<div style="width: 100px; margin-top: 5px;" class='form-group'>
 											<?php ComboBox("Tipo_Area1","Tipo_Area1","form-control","",1,false,1,array("AULA"=>"AULA","SALA CIC"=>"SALA CIC","EXTERNA"=>"EXTERNA","I+D+I"=>"I+D+I","LABORATORIO"=>"LABORATORIO","CUBICULO"=>"CUBICULO","COORDINACION"=>"COORDINACION","SITE"=>"SITE"),"","","","Elige el area"); ?>
 										</div>
 									</div>
 
 									<div style="flex: 0 0 auto; margin-right: 10px;">
-										<div>ID Area:</div>
+										<div>Id área:</div>
 										<div style="width: 100px; margin-top: 5px;" class='form-group'>
 											<?php ComboBox("Id_Area1","Id_Area1","form-control","",1,false,1,array("1" => "1","2" => "2","3" => "3","4" => "4","5" => "5","6" => "6","7" => "7","8" => "8","9" => "9","10" => "10","11" => "11","12" => "12","13" => "13","14" => "14","15" => "15","16" => "16","17" => "17","18" => "18","19" => "19","20" => "20","21" => "21","22" => "22","23" => "23","24" => "24","25" => "25","26" => "26","27" => "27","28" => "28","29" => "29","30" => "30","31" => "31","32" => "32","33" => "33","34" => "34","35" => "35","36" => "36","37" => "37","38" => "38","39" => "39","40" => "40","41" => "41","42" => "42","43" => "43","44" => "44","45" => "45","46" => "46","47" => "47","48"=>"48"),"","","","id del area"); ?>
 										</div>
@@ -438,7 +400,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-4'>
-										Fecha solicitado:
+										Fecha de solicitud:
 									</div>
 									<br>
 									<div class='col-md-8'>
@@ -470,7 +432,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						$.ajax({
 							type: "POST",
-							url: "<?php echo base_url();?>index.php/prestamo/Editar_Solicitud",
+							url: "<?php echo base_url();?>index.php/Prestamo/Editar_Solicitud",
 							data: $('#frmEditarPrestamo').serialize(),
 							success: function(msg){																					
 								var msg_substr = msg.split("@", 4);
@@ -520,7 +482,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Id. de la Solicitud:
+										Id. de Solicitud:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>											
@@ -529,8 +491,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</div>
 								</div>
 								<div class='row'>
-									<div class='col-md-5'>
-										Nombre de quién entrego:
+									<div class='col-md-8'>
+										Responsable de la entrega:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -541,7 +503,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Num. del solicitante:
+										Nombre del solicitante:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -563,7 +525,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Tipo de area:
+										Tipo de área:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -574,7 +536,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Numero de area:
+										Numero de área:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -614,10 +576,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<th style='width: 50px;'>Id. Solicitud					
 							<th>Profesor
 							<th>Edificio
-							<th>Tipo de area
-							<th>Numero de area
-							<th>Encargado del Prestamo
-							<th>Fecha de prestamo				
+							<th>Tipo de área
+							<th>Número de área
+							<th>Encargado del préstamo
+							<th>Fecha de préstamo				
 					</thead>
 					<tfoot>
 						<tr>																										
@@ -688,11 +650,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								{ responsivePriority: 1, targets: 0 },
 								{ responsivePriority: 1, targets: 1 }								
 							],											
-							ajax: '<?php echo base_url();?>index.php/prestamo/Obtener_Dataset_Prestamo',
+							ajax: '<?php echo base_url();?>index.php/Prestamo/Obtener_Dataset_Prestamo',
 							autoWidth: false,							
 							columns: [								
 								{ data: "id_solicitud" },
-								{ data: "profesor" },
+								{ data: "nombre" },
 								{ data: "Edificio" },
 								{ data: "Tipo_Area" },
 								{ data: "Num_Area" },

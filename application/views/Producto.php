@@ -117,7 +117,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											if (respuesta){										
 												$.ajax({
 													type: "POST",
-													url: "<?php echo base_url();?>index.php/producto/Eliminar_Producto",
+													url: "<?php echo base_url();?>index.php/Producto/Eliminar_Producto",
 													data: {"id_producto" : data[0].id_producto},
 													success: function(msg){															
 														var msg_substr = msg.split("@", 3);
@@ -179,11 +179,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div style='width: 480px;' class='modal-content'>
 							<div style="background-color: #000053;" class='modal-header'>
 								<!--<button style="background-color: #FFCD00;" type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>-->
-									<h4 style="color: white;" class='modal-title'>Datos del Producto</h4>
+									<h4 style="color: white;" class='modal-title'>Datos del producto</h4>
 							</div>
 							<div class='modal-body'>
 <?php 
-							echo form_open("producto/Crear_Producto","id='frmNuevoProducto' name='frmNuevoProducto' role='form'"); 
+							echo form_open("Producto/Crear_Producto","id='frmNuevoProducto' name='frmNuevoProducto' role='form'"); 
 								//Agregamos los campos de la llave primaria como campos de tipo hidden
 						
 ?>												
@@ -194,7 +194,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Nombre de Producto:
+										Nombre de producto:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>									
@@ -249,7 +249,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$("#btnGuardarProducto").click(function(){
 						$.ajax({
 							type: "POST",
-							url: "<?php echo base_url();?>index.php/producto/Crear_Producto",
+							url: "<?php echo base_url();?>index.php/Producto/Crear_Producto",
 							data: $('#frmNuevoProducto').serialize(),
 							success: function(msg){																					
 								var msg_substr = msg.split("@", 4);
@@ -284,7 +284,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div style='width: 480px;' class='modal-content'>
 							<div style="background-color: #000053;" class='modal-header'>
 								<!--<button style="background-color: #FFCD00;" type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>-->
-									<h4 style="color: white;" class='modal-title'>Editar Datos del Producto</h4>
+									<h4 style="color: white;" class='modal-title'>Editar datos del producto</h4>
 							</div>
 							<div class='modal-body'>
 <?php 
@@ -299,7 +299,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										
 								<div class='row'>
 									<div class='col-md-5'>
-										Id del Producto:
+										Id del producto:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -312,7 +312,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Nombre de Producto:
+										Nombre de producto:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>									
@@ -367,7 +367,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$("#btnGuardarEdicionProducto").click(function(){
 						$.ajax({
 							type: "POST",
-							url: "<?php echo base_url();?>index.php/producto/Editar_Producto",
+							url: "<?php echo base_url();?>index.php/Producto/Editar_Producto",
 							data: $('#frmEditarProducto').serialize(),
 							success: function(msg){																					
 								var msg_substr = msg.split("@", 4);
@@ -402,13 +402,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class='modal-content'>
 							<div style="background-color: #000053;" class='modal-header'>
 								<!--<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>-->
-									<h4 style="color: white;" class='modal-title'>Vizualizar información del producto</h4>
+									<h4 style="color: white;" class='modal-title'>Visualizar información del producto</h4>
 							</div>
 							<div class='modal-body'>
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Id del Producto:
+										Id del producto:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>
@@ -421,7 +421,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 								<div class='row'>
 									<div class='col-md-5'>
-										Nombre de Producto:
+										Nombre de producto:
 									</div>
 									<div class='col-md-8'>
 										<div class='form-group'>									
@@ -472,7 +472,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<th style='width: 30px;'>Id. Producto		
 							<th>Nombre de producto
 							<th>Estado
-							<th>Numero de serie		
+							<th>Número de serie		
 					</thead>
 					<tfoot>
 						<tr>																										
@@ -540,7 +540,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								{ responsivePriority: 1, targets: 0 },
 								{ responsivePriority: 1, targets: 1 }								
 							],											
-							ajax: '<?php echo base_url();?>index.php/producto/Obtener_Dataset_Producto',
+							ajax: '<?php echo base_url();?>index.php/Producto/Obtener_Dataset_Producto',
 							autoWidth: false,							
 							columns: [								
 								{ data: "id_producto" },

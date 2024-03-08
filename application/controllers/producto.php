@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class producto extends CI_Controller {	
+class Producto extends CI_Controller {	
 
 	public function index(){
 		if($this->session->userdata($this->config->item('mycfg_session_object_name'))){	
@@ -23,9 +23,9 @@ class producto extends CI_Controller {
 			$session_data = $this->session->userdata($this->config->item('mycfg_session_object_name'));							
 			$this->load->database($this->Seguridad_SIIA_Model->Obtener_DBConfig_Values($this->config->item('mycfg_usuario_conexion'),$this->config->item('mycfg_pwd_usuario_conexion')));				
 			
-            $this->load->model('producto_model');
+            $this->load->model('Producto_model');
 			//Se armar? un json array con los registros de la consulta, este json alimentar? el datatable		
-			$resProducto=$this->producto_model->Obtener_Producto();										
+			$resProducto=$this->Producto_model->Obtener_Producto();										
 			
 			if ($resProducto){
 				while ($rowProducto=$resProducto->unbuffered_row('array')){				
@@ -56,8 +56,8 @@ class producto extends CI_Controller {
 			$Operacion_Borrado_Exitosa=false;
 			$this->db->trans_begin();			
 			
-			$this->load->model('producto_model');
-			$Producto_Eliminado=$this->producto_model->Eliminar_Producto($this->input->post('id_producto'));															
+			$this->load->model('Producto_model');
+			$Producto_Eliminado=$this->Producto_model->Eliminar_Producto($this->input->post('id_producto'));															
 			
 			if ($Producto_Eliminado){
 				$this->db->trans_commit();
@@ -111,8 +111,8 @@ class producto extends CI_Controller {
 				$Operacion_Creacion_Exitosa=false;
 				$this->db->trans_begin();
 				
-				$this->load->model('producto_model');
-                $Producto_Creado = $this->producto_model->Crear_Producto($this->input->post('Nombre_Producto'),$this->input->post('Estado_p'),$this->input->post('Num_serie'));
+				$this->load->model('Producto_model');
+                $Producto_Creado = $this->Producto_model->Crear_Producto($this->input->post('Nombre_Producto'),$this->input->post('Estado_p'),$this->input->post('Num_serie'));
 				
 				
 				if ($Producto_Creado){
@@ -168,8 +168,8 @@ class producto extends CI_Controller {
 				$Operacion_Edicion_Exitosa=false;
 				$this->db->trans_begin();
 				
-				$this->load->model('producto_model');
-				$Producto_Editado=$this->producto_model->Editar_Producto($this->input->post('e_id_producto'),$this->input->post('E_Nombre_Producto'),$this->input->post('E_Estado_p'),$this->input->post('E_Num_serie'));
+				$this->load->model('Producto_model');
+				$Producto_Editado=$this->Producto_model->Editar_Producto($this->input->post('e_id_producto'),$this->input->post('E_Nombre_Producto'),$this->input->post('E_Estado_p'),$this->input->post('E_Num_serie'));
 				
 				if ($Producto_Editado){
 					$this->db->trans_commit();

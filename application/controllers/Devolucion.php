@@ -9,7 +9,7 @@ class Devolucion extends CI_Controller {
 			$session_data = $this->session->userdata($this->config->item('mycfg_session_object_name'));							
 			$this->load->database($this->Seguridad_SIIA_Model->Obtener_DBConfig_Values($this->config->item('mycfg_usuario_conexion'),$this->config->item('mycfg_pwd_usuario_conexion')));			
 			
-			$data['menu']=$this->Seguridad_SIIA_Model->Crear_Menu_Usuario($this->config->item('mycfg_id_aplicacion'),$session_data['default_pfc'],"Procesos","Prestamos");						
+			$data['menu']=$this->Seguridad_SIIA_Model->Crear_Menu_Usuario($this->config->item('mycfg_id_aplicacion'),$session_data['default_pfc'],"Procesos","Préstamos");						
 			
 			$this->load->view('Devolucion',$data);			
 			
@@ -24,8 +24,8 @@ class Devolucion extends CI_Controller {
 			$this->load->database($this->Seguridad_SIIA_Model->Obtener_DBConfig_Values($this->config->item('mycfg_usuario_conexion'),$this->config->item('mycfg_pwd_usuario_conexion')));				
 			
 			//Se armar? un json array con los registros de la consulta, este json alimentar? el datatable
-			$this->load->model('devolucion_model');	
-			$resPrestamo=$this->devolucion_model->Obtener_Prestamo();										
+			$this->load->model('Devolucion_model');	
+			$resPrestamo=$this->Devolucion_model->Obtener_Prestamo();										
 			
 			if ($resPrestamo){
 				while ($rowprestamo=$resPrestamo->unbuffered_row('array')){				
@@ -56,8 +56,8 @@ class Devolucion extends CI_Controller {
 			$Operacion_Borrado_Exitosa=false;
 			$this->db->trans_begin();								
 			
-			$this->load->model('devolucion_model');
-			$Prestamo_Eliminada=$this->devolucion_model->Eliminar_Prestamo($this->input->post('id_prestamo'));															
+			$this->load->model('Devolucion_model');
+			$Prestamo_Eliminada=$this->Devolucion_model->Eliminar_Prestamo($this->input->post('id_prestamo'));															
 			
 			if ($Prestamo_Eliminada){
 				$this->db->trans_commit();
@@ -160,8 +160,8 @@ class Devolucion extends CI_Controller {
 				$Operacion_Edicion_Exitosa=false;
 				$this->db->trans_begin();	
 				
-				$this->load->model('devolucion_model');
-				$Devolucion_Editada = $this->devolucion_model->Editar_Devolucion($this->input->post('id_prestamo'),$this->input->post('id_producto'),$this->input->post('Encargado2'),$this->input->post('Fecha_devolucion'),$this->input->post('observacion1'),$this->input->post('id_solicitud1'),'devuelto');
+				$this->load->model('Devolucion_model');
+				$Devolucion_Editada = $this->Devolucion_model->Editar_Devolucion($this->input->post('id_prestamo'),$this->input->post('id_producto'),$this->input->post('Encargado2'),$this->input->post('Fecha_devolucion'),$this->input->post('observacion1'),$this->input->post('id_solicitud1'),'devuelto');
 				
 				
 				if ($Devolucion_Editada){

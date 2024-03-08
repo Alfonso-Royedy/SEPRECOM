@@ -322,7 +322,7 @@ class Seguridad_SIIA_Model extends CI_Model {
 		$Menu_HTML.=$this->Crear_Menu_Dropdown("Procesos",$Active,$SubActive,"Procesos",$arrOpcionesMenuInvisibles,
 												array(
 													array("nombre"=>"Solicitudes","accion"=>"prestamo","descripcion"=>"Solicitudes"),
-													array("nombre"=>"Prestamos","accion"=>"Devolucion","descripcion"=>"Prestamos")
+													array("nombre"=>"Préstamos","accion"=>"Devolucion","descripcion"=>"Préstamos")
 												));	
 		return $Menu_HTML;
 	}
