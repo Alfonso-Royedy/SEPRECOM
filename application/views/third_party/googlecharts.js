@@ -1,1 +1,0 @@
-<script type="text/javascript" language="javascript" src="<?php echo base_url();?>application/views/third_party/google/charts/loader.js"></script>
